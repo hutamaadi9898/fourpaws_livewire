@@ -3,10 +3,11 @@
 ## 🎉 Overview
 
 Phase 5 successfully implements all remaining critical features:
-- ✅ Memorial Editing
-- ✅ File Uploads (Profile Photos & Gallery)
-- ✅ Tribute Moderation UI
-- ✅ Email Notifications
+
+-   ✅ Memorial Editing
+-   ✅ File Uploads (Profile Photos & Gallery)
+-   ✅ Tribute Moderation UI
+-   ✅ Email Notifications
 
 ---
 
@@ -17,24 +18,27 @@ Phase 5 successfully implements all remaining critical features:
 **Location:** `app/Livewire/EditMemorial.php`
 
 **Features:**
-- Full 4-step wizard matching create flow
-- Authorization checks (only owner can edit)
-- Load existing memorial data into form
-- Update all fields including photos
-- Same validation rules as creation
-- File upload support for new photos
+
+-   Full 4-step wizard matching create flow
+-   Authorization checks (only owner can edit)
+-   Load existing memorial data into form
+-   Update all fields including photos
+-   Same validation rules as creation
+-   File upload support for new photos
 
 **Route:** `/memorials/{memorial}/edit`
 
 **Authorization:**
-- Uses `MemorialPolicy` to verify ownership
-- Returns 403 if user doesn't own memorial
-- Policy methods:
-  - `view()` - Public memorials viewable by all, private by owner only
-  - `update()` - Only owner can edit
-  - `delete()` - Only owner can delete
+
+-   Uses `MemorialPolicy` to verify ownership
+-   Returns 403 if user doesn't own memorial
+-   Policy methods:
+    -   `view()` - Public memorials viewable by all, private by owner only
+    -   `update()` - Only owner can edit
+    -   `delete()` - Only owner can delete
 
 **Key Methods:**
+
 ```php
 mount(Memorial $memorial)  // Load existing data
 submit()                   // Update memorial
@@ -47,18 +51,21 @@ submit()                   // Update memorial
 ### 2. File Upload System
 
 **Storage Configuration:**
-- Disk: `public` (configured in `config/filesystems.php`)
-- Profile Photos: `storage/app/public/memorials/profiles/`
-- Gallery Photos: `storage/app/public/memorials/gallery/`
+
+-   Disk: `public` (configured in `config/filesystems.php`)
+-   Profile Photos: `storage/app/public/memorials/profiles/`
+-   Gallery Photos: `storage/app/public/memorials/gallery/`
 
 **Livewire Integration:**
-- Uses `WithFileUploads` trait
-- Validation: `max:10240` (10MB per file)
-- File types: `image/*`
+
+-   Uses `WithFileUploads` trait
+-   Validation: `max:10240` (10MB per file)
+-   File types: `image/*`
 
 **Upload Flow:**
 
 #### CreateMemorial Component:
+
 ```php
 // Profile photo
 if ($this->profilePhoto) {
@@ -74,20 +81,24 @@ foreach ($this->additionalPhotos as $index => $photo) {
 ```
 
 #### EditMemorial Component:
-- Same upload logic as creation
-- Appends new photos to existing gallery
-- Preserves existing photos
-- Updates profile photo if new one uploaded
+
+-   Same upload logic as creation
+-   Appends new photos to existing gallery
+-   Preserves existing photos
+-   Updates profile photo if new one uploaded
 
 **MediaAsset Model:**
-- Stores metadata for uploaded images
-- Fields: `collection`, `disk`, `path`, `type`, `sort_order`
-- Relationship: `belongsTo(Memorial::class)`
+
+-   Stores metadata for uploaded images
+-   Fields: `collection`, `disk`, `path`, `type`, `sort_order`
+-   Relationship: `belongsTo(Memorial::class)`
 
 **To Make Uploads Publicly Accessible:**
+
 ```bash
 php artisan storage:link
 ```
+
 This creates a symbolic link from `public/storage` to `storage/app/public`.
 
 ---
@@ -97,31 +108,35 @@ This creates a symbolic link from `public/storage` to `storage/app/public`.
 **Component:** `app/Livewire/TributeModeration.php`
 
 **Features:**
-- View all tributes for user's memorials
-- Filter by status (Pending, Approved, Rejected, All)
-- Approve/Reject actions
-- Pagination (10 per page)
-- Email notifications on approval
-- Beautiful empty states
+
+-   View all tributes for user's memorials
+-   Filter by status (Pending, Approved, Rejected, All)
+-   Approve/Reject actions
+-   Pagination (10 per page)
+-   Email notifications on approval
+-   Beautiful empty states
 
 **Route:** `/tributes/moderate`
 
 **UI Elements:**
-- Tab-based status filtering
-- Tribute cards showing:
-  - Memorial name badge
-  - Submitter details
-  - Tribute content
-  - Status badge (color-coded)
-  - Action buttons (Approve/Reject)
-  - Moderation history
+
+-   Tab-based status filtering
+-   Tribute cards showing:
+    -   Memorial name badge
+    -   Submitter details
+    -   Tribute content
+    -   Status badge (color-coded)
+    -   Action buttons (Approve/Reject)
+    -   Moderation history
 
 **Status Colors:**
-- 🟡 Pending: Yellow
-- 🟢 Approved: Green
-- 🔴 Rejected: Red
+
+-   🟡 Pending: Yellow
+-   🟢 Approved: Green
+-   🔴 Rejected: Red
 
 **Approval Flow:**
+
 1. User clicks "Approve" on pending tribute
 2. Status updated to 'approved'
 3. `approved_at` timestamp set
@@ -130,6 +145,7 @@ This creates a symbolic link from `public/storage` to `storage/app/public`.
 6. Success message shown
 
 **Rejection Flow:**
+
 1. User clicks "Reject" on pending tribute
 2. Status updated to 'rejected'
 3. `rejected_at` timestamp set
@@ -137,8 +153,9 @@ This creates a symbolic link from `public/storage` to `storage/app/public`.
 5. Success message shown (no email sent)
 
 **Navigation:**
-- Added "Tributes" link to main navigation (when authenticated)
-- Shows pending count badge (future enhancement)
+
+-   Added "Tributes" link to main navigation (when authenticated)
+-   Shows pending count badge (future enhancement)
 
 ---
 
@@ -153,14 +170,16 @@ This creates a symbolic link from `public/storage` to `storage/app/public`.
 **Recipient:** Memorial owner (creator)
 
 **Content:**
-- Congratulations message
-- Memorial details
-- Direct link to view memorial
-- Sharing instructions
+
+-   Congratulations message
+-   Memorial details
+-   Direct link to view memorial
+-   Sharing instructions
 
 **Template:** `resources/views/emails/memorial-published.blade.php` (already exists)
 
 **Implementation:**
+
 ```php
 Mail::to(auth()->user()->email)->send(new MemorialPublished($memorial));
 ```
@@ -174,20 +193,23 @@ Mail::to(auth()->user()->email)->send(new MemorialPublished($memorial));
 **Recipient:** Tribute submitter
 
 **Content:**
-- Approval notification
-- Tribute headline (if provided)
-- Pet name
-- Link to view memorial
-- Thank you message
+
+-   Approval notification
+-   Tribute headline (if provided)
+-   Pet name
+-   Link to view memorial
+-   Thank you message
 
 **Template:** `resources/views/emails/tribute-approved.blade.php`
 
 **Data Passed:**
-- `$tribute` - The tribute model
-- `$memorial` - The related memorial
-- `$memorialUrl` - Direct link to memorial page
+
+-   `$tribute` - The tribute model
+-   `$memorial` - The related memorial
+-   `$memorialUrl` - Direct link to memorial page
 
 **Implementation:**
+
 ```php
 Mail::to($tribute->submitter_email)->send(new TributeApproved($tribute));
 ```
@@ -201,29 +223,33 @@ Mail::to($tribute->submitter_email)->send(new TributeApproved($tribute));
 **Recipient:** Memorial owner
 
 **Content:**
-- New tribute notification
-- Submitter details
-- Tribute content preview
-- Link to moderation page
-- Moderation instructions
+
+-   New tribute notification
+-   Submitter details
+-   Tribute content preview
+-   Link to moderation page
+-   Moderation instructions
 
 **Template:** `resources/views/emails/tribute-submitted.blade.php` (already exists)
 
 **Implementation:**
+
 ```php
 Mail::to($this->memorial->owner->email)->send(new TributeSubmitted($tribute));
 ```
 
 **Email Queue:**
 All emails implement `ShouldQueue` interface for async sending:
+
 ```php
 class MemorialPublished extends Mailable implements ShouldQueue
 ```
 
 **Queue Configuration:**
-- Driver: `sync` (development) or `database` (production)
-- Can be changed in `.env`: `QUEUE_CONNECTION=database`
-- Run queue worker: `php artisan queue:work`
+
+-   Driver: `sync` (development) or `database` (production)
+-   Can be changed in `.env`: `QUEUE_CONNECTION=database`
+-   Run queue worker: `php artisan queue:work`
 
 ---
 
@@ -232,6 +258,7 @@ class MemorialPublished extends Mailable implements ShouldQueue
 ### Migration: `add_missing_fields_to_memorials_table`
 
 **Added Columns:**
+
 ```sql
 species           VARCHAR(100)   NULLABLE
 breed             VARCHAR(100)   NULLABLE
@@ -246,6 +273,7 @@ settings          JSON           NULLABLE
 **Purpose:** Match the CreateMemorial form fields with actual database schema
 
 **Model Updates:**
+
 ```php
 // Memorial.php casts
 'settings' => 'array',
@@ -261,11 +289,13 @@ settings          JSON           NULLABLE
 ### Navigation Updates
 
 **Authenticated Navigation:**
+
 ```
 🐾 FourPaws | Dashboard | Tributes | Create Memorial
 ```
 
 **Guest Navigation:**
+
 ```
 🐾 FourPaws | Sign In | Get Started
 ```
@@ -284,17 +314,19 @@ settings          JSON           NULLABLE
 ### Tribute Moderation Page
 
 **Layout:**
-- Clean tab navigation
-- Card-based tribute display
-- Inline approve/reject actions
-- Pagination controls
-- Empty state designs
+
+-   Clean tab navigation
+-   Card-based tribute display
+-   Inline approve/reject actions
+-   Pagination controls
+-   Empty state designs
 
 **Status Indicators:**
-- Color-coded badges
-- Clear visual hierarchy
-- Timestamp displays
-- Moderator attribution
+
+-   Color-coded badges
+-   Clear visual hierarchy
+-   Timestamp displays
+-   Moderator attribution
 
 ---
 
@@ -303,6 +335,7 @@ settings          JSON           NULLABLE
 ### Memorial Policy (`MemorialPolicy`)
 
 **Methods Implemented:**
+
 ```php
 viewAny(User $user): bool               // List memorials
 view(?User $user, Memorial $memorial): bool  // View single (null for guests)
@@ -311,13 +344,15 @@ delete(User $user, Memorial $memorial): bool // Delete memorial
 ```
 
 **Authorization Checks:**
-- Edit page: `$this->authorize('update', $memorial)`
-- Show page: Checks visibility and ownership
-- Dashboard: Only shows user's own memorials
+
+-   Edit page: `$this->authorize('update', $memorial)`
+-   Show page: Checks visibility and ownership
+-   Dashboard: Only shows user's own memorials
 
 ### Route Protection
 
 **Protected Routes:**
+
 ```php
 Route::middleware(['auth'])->group(function () {
     Route::get('/memorials/create', CreateMemorial::class);
@@ -365,9 +400,9 @@ Route::middleware(['auth'])->group(function () {
 6. Selects multiple images
 7. Completes wizard
 8. On submit:
-   - Files uploaded to storage
-   - Paths saved to database
-   - MediaAsset records created
+    - Files uploaded to storage
+    - Paths saved to database
+    - MediaAsset records created
 9. Photos accessible via public URL
 
 ---
@@ -375,83 +410,94 @@ Route::middleware(['auth'])->group(function () {
 ## 🧪 Testing Checklist
 
 ### Memorial Editing
-- [x] Create a memorial
-- [x] Navigate to dashboard
-- [x] Click "Edit" button
-- [x] Verify existing data loaded
-- [x] Update pet name
-- [x] Change theme color
-- [x] Upload new profile photo
-- [x] Save changes
-- [x] Verify updates reflected
-- [x] Test authorization (try editing another user's memorial)
+
+-   [x] Create a memorial
+-   [x] Navigate to dashboard
+-   [x] Click "Edit" button
+-   [x] Verify existing data loaded
+-   [x] Update pet name
+-   [x] Change theme color
+-   [x] Upload new profile photo
+-   [x] Save changes
+-   [x] Verify updates reflected
+-   [x] Test authorization (try editing another user's memorial)
 
 ### File Uploads
-- [x] Create symlink: `php artisan storage:link`
-- [x] Upload profile photo during creation
-- [x] Upload gallery photos
-- [x] Verify files exist in storage
-- [x] Verify database records created
-- [x] Test file size validation (>10MB)
-- [x] Test file type validation (non-images)
-- [x] View uploaded images on memorial page
+
+-   [x] Create symlink: `php artisan storage:link`
+-   [x] Upload profile photo during creation
+-   [x] Upload gallery photos
+-   [x] Verify files exist in storage
+-   [x] Verify database records created
+-   [x] Test file size validation (>10MB)
+-   [x] Test file type validation (non-images)
+-   [x] View uploaded images on memorial page
 
 ### Tribute Moderation
-- [x] Submit a tribute (as guest)
-- [x] Log in as memorial owner
-- [x] Navigate to "Tributes" page
-- [x] Verify tribute appears in "Pending" tab
-- [x] Click "Approve" button
-- [x] Confirm email sent to submitter
-- [x] Verify tribute moves to "Approved" tab
-- [x] Submit another tribute
-- [x] Click "Reject" button
-- [x] Verify tribute moves to "Rejected" tab
-- [x] Test pagination with 11+ tributes
+
+-   [x] Submit a tribute (as guest)
+-   [x] Log in as memorial owner
+-   [x] Navigate to "Tributes" page
+-   [x] Verify tribute appears in "Pending" tab
+-   [x] Click "Approve" button
+-   [x] Confirm email sent to submitter
+-   [x] Verify tribute moves to "Approved" tab
+-   [x] Submit another tribute
+-   [x] Click "Reject" button
+-   [x] Verify tribute moves to "Rejected" tab
+-   [x] Test pagination with 11+ tributes
 
 ### Email Notifications
-- [x] Configure mail driver in `.env`
-- [x] Create memorial
-- [x] Verify "Memorial Published" email received
-- [x] Submit tribute
-- [x] Verify "Tribute Submitted" email received by owner
-- [x] Approve tribute
-- [x] Verify "Tribute Approved" email received by submitter
-- [x] Check email queue (if using database driver)
-- [x] Test queue worker: `php artisan queue:work`
+
+-   [x] Configure mail driver in `.env`
+-   [x] Create memorial
+-   [x] Verify "Memorial Published" email received
+-   [x] Submit tribute
+-   [x] Verify "Tribute Submitted" email received by owner
+-   [x] Approve tribute
+-   [x] Verify "Tribute Approved" email received by submitter
+-   [x] Check email queue (if using database driver)
+-   [x] Test queue worker: `php artisan queue:work`
 
 ---
 
 ## 🐛 Bug Fixes
 
 ### 1. Schema Mismatch
+
 **Issue:** CreateMemorial used `companion_name`, `is_public` but database has `pet_name`, `visibility`
 
-**Fix:** 
-- Added migration for missing fields
-- Updated CreateMemorial to map to correct columns
-- Updated ShowMemorial, dashboard views
+**Fix:**
+
+-   Added migration for missing fields
+-   Updated CreateMemorial to map to correct columns
+-   Updated ShowMemorial, dashboard views
 
 ### 2. Tribute Field Names
+
 **Issue:** Tribute creation used `author_name`, `author_email` but database has `submitter_name`, `submitter_email`
 
 **Fix:**
-- Updated ShowMemorial::submitTribute() to use correct fields
-- Updated TributeModeration component to display correct fields
+
+-   Updated ShowMemorial::submitTribute() to use correct fields
+-   Updated TributeModeration component to display correct fields
 
 ### 3. Privacy Field Mismatch
+
 **Issue:** Code checking `$memorial->is_public` but database has `visibility` column
 
 **Fix:**
-- Updated all references to use `visibility === 'public'`
-- Updated dashboard badges
-- Updated ShowMemorial::mount() authorization
+
+-   Updated all references to use `visibility === 'public'`
+-   Updated dashboard badges
+-   Updated ShowMemorial::mount() authorization
 
 ---
 
 ## 📊 Database State
 
 ### Current Tables
+
 ```
 ✅ users
 ✅ memorials (with new fields)
@@ -463,6 +509,7 @@ Route::middleware(['auth'])->group(function () {
 ```
 
 ### Memorial Record Example
+
 ```php
 [
     'id' => 'ulid...',
@@ -493,6 +540,7 @@ Route::middleware(['auth'])->group(function () {
 ### Environment Variables
 
 **Mail Configuration:**
+
 ```env
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.mailtrap.io  # or mailgun, ses, etc.
@@ -505,6 +553,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 **Queue Configuration:**
+
 ```env
 QUEUE_CONNECTION=database  # or redis, sqs
 ```
@@ -512,11 +561,13 @@ QUEUE_CONNECTION=database  # or redis, sqs
 ### Storage Setup
 
 **Create Symbolic Link:**
+
 ```bash
 php artisan storage:link
 ```
 
 **Set Permissions:**
+
 ```bash
 chmod -R 775 storage
 chmod -R 775 bootstrap/cache
@@ -525,11 +576,13 @@ chmod -R 775 bootstrap/cache
 ### Queue Worker
 
 **Run Queue Worker (Production):**
+
 ```bash
 php artisan queue:work --tries=3 --timeout=90
 ```
 
 **Supervisor Configuration:**
+
 ```ini
 [program:fourpaws-worker]
 process_name=%(program_name)s_%(process_num)02d
@@ -547,26 +600,30 @@ stdout_logfile=/path/to/fourpaws/storage/logs/worker.log
 ## 📈 Performance Considerations
 
 ### File Uploads
-- **Optimization:** Consider image resizing/optimization
-- **Library:** Intervention Image or Spatie Media Library
-- **CDN:** Consider serving images from CDN in production
-- **Storage:** S3 for scalability
+
+-   **Optimization:** Consider image resizing/optimization
+-   **Library:** Intervention Image or Spatie Media Library
+-   **CDN:** Consider serving images from CDN in production
+-   **Storage:** S3 for scalability
 
 ### Email Queue
-- **Driver:** Use `database` or `redis` for production
-- **Workers:** Run multiple queue workers for high traffic
-- **Monitoring:** Use Horizon (Laravel) for queue monitoring
+
+-   **Driver:** Use `database` or `redis` for production
+-   **Workers:** Run multiple queue workers for high traffic
+-   **Monitoring:** Use Horizon (Laravel) for queue monitoring
 
 ### Database Queries
-- **Eager Loading:** Already implemented in TributeModeration
-- **Indexes:** Existing indexes on status, memorial_id
-- **Caching:** Consider caching tribute counts on dashboard
+
+-   **Eager Loading:** Already implemented in TributeModeration
+-   **Indexes:** Existing indexes on status, memorial_id
+-   **Caching:** Consider caching tribute counts on dashboard
 
 ---
 
 ## 🎯 What's Working Now
 
 ### Complete Features
+
 ✅ User Registration & Login  
 ✅ Memorial Creation (with photos)  
 ✅ Memorial Editing (with photos)  
@@ -579,7 +636,7 @@ stdout_logfile=/path/to/fourpaws/storage/logs/worker.log
 ✅ Authorization & Policies  
 ✅ Theme Customization  
 ✅ Privacy Controls  
-✅ Dark Mode Support  
+✅ Dark Mode Support
 
 ---
 
@@ -588,88 +645,99 @@ stdout_logfile=/path/to/fourpaws/storage/logs/worker.log
 ### Phase 6+ Ideas
 
 **Memorial Features:**
-- ❌ Memorial deletion with confirmation
-- ❌ Memorial archiving (soft delete)
-- ❌ Memorial statistics (views, shares)
-- ❌ Photo gallery with lightbox
-- ❌ Video upload support
-- ❌ Custom memorial URLs
+
+-   ❌ Memorial deletion with confirmation
+-   ❌ Memorial archiving (soft delete)
+-   ❌ Memorial statistics (views, shares)
+-   ❌ Photo gallery with lightbox
+-   ❌ Video upload support
+-   ❌ Custom memorial URLs
 
 **Tribute Features:**
-- ❌ Tribute editing by submitter
-- ❌ Tribute deletion by owner
-- ❌ Tribute photo uploads
-- ❌ Tribute reactions (hearts)
-- ❌ Tribute replies/comments
+
+-   ❌ Tribute editing by submitter
+-   ❌ Tribute deletion by owner
+-   ❌ Tribute photo uploads
+-   ❌ Tribute reactions (hearts)
+-   ❌ Tribute replies/comments
 
 **Social Features:**
-- ❌ Share to social media
-- ❌ Download memorial as PDF
-- ❌ QR code for memorial
-- ❌ Guest book signing
-- ❌ Memorial anniversary reminders
+
+-   ❌ Share to social media
+-   ❌ Download memorial as PDF
+-   ❌ QR code for memorial
+-   ❌ Guest book signing
+-   ❌ Memorial anniversary reminders
 
 **Admin Features:**
-- ❌ Filament admin panel setup
-- ❌ User management
-- ❌ Memorial reporting/moderation
-- ❌ Analytics dashboard
-- ❌ Content moderation tools
+
+-   ❌ Filament admin panel setup
+-   ❌ User management
+-   ❌ Memorial reporting/moderation
+-   ❌ Analytics dashboard
+-   ❌ Content moderation tools
 
 **Email Features:**
-- ❌ Weekly digest emails
-- ❌ Memorial anniversary notifications
-- ❌ Tribute milestone notifications
-- ❌ Email preferences page
-- ❌ Unsubscribe functionality
+
+-   ❌ Weekly digest emails
+-   ❌ Memorial anniversary notifications
+-   ❌ Tribute milestone notifications
+-   ❌ Email preferences page
+-   ❌ Unsubscribe functionality
 
 **Performance:**
-- ❌ Image optimization pipeline
-- ❌ CDN integration
-- ❌ Caching strategy
-- ❌ Search functionality
-- ❌ API for mobile apps
+
+-   ❌ Image optimization pipeline
+-   ❌ CDN integration
+-   ❌ Caching strategy
+-   ❌ Search functionality
+-   ❌ API for mobile apps
 
 ---
 
 ## 🎓 Code Quality
 
 **Standards:**
-- ✅ Laravel Pint (81 files formatted)
-- ✅ PSR-12 coding standards
-- ✅ Type hints on all methods
-- ✅ PHPDoc blocks where needed
-- ✅ Consistent naming conventions
+
+-   ✅ Laravel Pint (81 files formatted)
+-   ✅ PSR-12 coding standards
+-   ✅ Type hints on all methods
+-   ✅ PHPDoc blocks where needed
+-   ✅ Consistent naming conventions
 
 **Security:**
-- ✅ Authorization policies
-- ✅ CSRF protection
-- ✅ SQL injection prevention (Eloquent)
-- ✅ XSS protection (Blade escaping)
-- ✅ File upload validation
-- ✅ Email validation
+
+-   ✅ Authorization policies
+-   ✅ CSRF protection
+-   ✅ SQL injection prevention (Eloquent)
+-   ✅ XSS protection (Blade escaping)
+-   ✅ File upload validation
+-   ✅ Email validation
 
 ---
 
 ## 📞 Support & Documentation
 
 **Project Files:**
-- `PHASE_0-2_COMPLETE.md` - Initial implementation
-- `PHASE_3-4_COMPLETE.md` - Auth & dashboard
-- `PHASE_5_COMPLETE.md` - This file
-- `QUICK_START.md` - Quick reference guide
-- `plan.md` - Original roadmap
-- `AGENTS.md` - AI agent guidelines
+
+-   `PHASE_0-2_COMPLETE.md` - Initial implementation
+-   `PHASE_3-4_COMPLETE.md` - Auth & dashboard
+-   `PHASE_5_COMPLETE.md` - This file
+-   `QUICK_START.md` - Quick reference guide
+-   `plan.md` - Original roadmap
+-   `AGENTS.md` - AI agent guidelines
 
 **Live URLs:**
-- Landing: http://fourpaws.test
-- Dashboard: http://fourpaws.test/dashboard
-- Create: http://fourpaws.test/memorials/create
-- Tributes: http://fourpaws.test/tributes/moderate
+
+-   Landing: http://fourpaws.test
+-   Dashboard: http://fourpaws.test/dashboard
+-   Create: http://fourpaws.test/memorials/create
+-   Tributes: http://fourpaws.test/tributes/moderate
 
 **Test Account:**
-- Email: test@example.com
-- Password: password
+
+-   Email: test@example.com
+-   Password: password
 
 ---
 

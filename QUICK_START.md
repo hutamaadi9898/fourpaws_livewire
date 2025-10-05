@@ -2,29 +2,31 @@
 
 ## 🌐 Live URLs
 
-| Page | URL | Auth Required |
-|------|-----|---------------|
-| Landing Page | http://fourpaws.test | No |
-| Register | http://fourpaws.test/register | No |
-| Login | http://fourpaws.test/login | No |
-| Dashboard | http://fourpaws.test/dashboard | Yes |
-| Create Memorial | http://fourpaws.test/memorials/create | Yes |
-| Edit Memorial | http://fourpaws.test/memorials/{id}/edit | Yes (owner) |
-| Moderate Tributes | http://fourpaws.test/tributes/moderate | Yes |
-| View Memorial | http://fourpaws.test/{slug} | No (if public) |
-| Admin Panel | http://fourpaws.test/admin | Yes (admin) |
-| Privacy Policy | http://fourpaws.test/privacy | No |
-| Terms of Service | http://fourpaws.test/terms | No |
+| Page              | URL                                      | Auth Required  |
+| ----------------- | ---------------------------------------- | -------------- |
+| Landing Page      | http://fourpaws.test                     | No             |
+| Register          | http://fourpaws.test/register            | No             |
+| Login             | http://fourpaws.test/login               | No             |
+| Dashboard         | http://fourpaws.test/dashboard           | Yes            |
+| Create Memorial   | http://fourpaws.test/memorials/create    | Yes            |
+| Edit Memorial     | http://fourpaws.test/memorials/{id}/edit | Yes (owner)    |
+| Moderate Tributes | http://fourpaws.test/tributes/moderate   | Yes            |
+| View Memorial     | http://fourpaws.test/{slug}              | No (if public) |
+| Admin Panel       | http://fourpaws.test/admin               | Yes (admin)    |
+| Privacy Policy    | http://fourpaws.test/privacy             | No             |
+| Terms of Service  | http://fourpaws.test/terms               | No             |
 
 ---
 
 ## 👤 Test Accounts
 
 ### Regular User:
-- **Email:** test@example.com
-- **Password:** password
+
+-   **Email:** test@example.com
+-   **Password:** password
 
 ### Create New Account:
+
 Visit http://fourpaws.test/register
 
 ---
@@ -32,39 +34,43 @@ Visit http://fourpaws.test/register
 ## ✅ Feature Checklist
 
 ### Phase 0-2 (Complete):
-- [x] Landing page with product promotion
-- [x] Memorial creation wizard (4 steps)
-- [x] Memorial display with tributes
-- [x] Theme customization
-- [x] Privacy controls
-- [x] Database migrations
-- [x] Tailwind CSS styling
-- [x] Dark mode support
-- [x] Unsplash stock images
+
+-   [x] Landing page with product promotion
+-   [x] Memorial creation wizard (4 steps)
+-   [x] Memorial display with tributes
+-   [x] Theme customization
+-   [x] Privacy controls
+-   [x] Database migrations
+-   [x] Tailwind CSS styling
+-   [x] Dark mode support
+-   [x] Unsplash stock images
 
 ### Phase 3-4 (Complete):
-- [x] User authentication (register/login)
-- [x] Protected memorial creation
-- [x] User dashboard
-- [x] Memorial management UI
-- [x] Landing page redesign
-- [x] Testimonials
-- [x] Navigation updates
-- [x] Empty states
+
+-   [x] User authentication (register/login)
+-   [x] Protected memorial creation
+-   [x] User dashboard
+-   [x] Memorial management UI
+-   [x] Landing page redesign
+-   [x] Testimonials
+-   [x] Navigation updates
+-   [x] Empty states
 
 ### Phase 5 (Complete):
-- [x] Memorial editing
-- [x] File uploads (photos)
-- [x] Tribute moderation UI
-- [x] Email notifications
+
+-   [x] Memorial editing
+-   [x] File uploads (photos)
+-   [x] Tribute moderation UI
+-   [x] Email notifications
 
 ### Phase 6+ (Future):
-- [ ] Memorial deletion
-- [ ] Social sharing
-- [ ] Analytics dashboard
-- [ ] Search functionality
-- [ ] Video uploads
-- [ ] QR codes
+
+-   [ ] Memorial deletion
+-   [ ] Social sharing
+-   [ ] Analytics dashboard
+-   [ ] Search functionality
+-   [ ] Video uploads
+-   [ ] QR codes
 
 ---
 
@@ -80,6 +86,7 @@ Visit http://fourpaws.test/register
 ## 📱 User Flows
 
 ### New User:
+
 1. Land on http://fourpaws.test
 2. Click "Get Started Free"
 3. Fill registration form
@@ -90,6 +97,7 @@ Visit http://fourpaws.test/register
 8. Share link with others
 
 ### Returning User:
+
 1. Land on http://fourpaws.test
 2. Click "Sign In"
 3. Enter credentials
@@ -102,72 +110,79 @@ Visit http://fourpaws.test/register
 ## 🎨 Design Features
 
 ### Landing Page:
-- Hero with compelling copy
-- 3 feature highlights with icons
-- How it works section
-- 3 testimonials
-- Final CTA section
-- Footer with legal links
+
+-   Hero with compelling copy
+-   3 feature highlights with icons
+-   How it works section
+-   3 testimonials
+-   Final CTA section
+-   Footer with legal links
 
 ### Dashboard:
-- Grid of memorial cards
-- Public/Private badges
-- Tribute counts
-- Quick actions (View/Edit)
-- Empty state design
-- Create new memorial button
+
+-   Grid of memorial cards
+-   Public/Private badges
+-   Tribute counts
+-   Quick actions (View/Edit)
+-   Empty state design
+-   Create new memorial button
 
 ### Memorial Wizard:
-- Step 1: Pet info (name, species, breed, dates)
-- Step 2: Biography and memories
-- Step 3: Theme (7 colors, 3 layouts)
-- Step 4: Privacy settings
-- Progress indicator
-- Validation per step
+
+-   Step 1: Pet info (name, species, breed, dates)
+-   Step 2: Biography and memories
+-   Step 3: Theme (7 colors, 3 layouts)
+-   Step 4: Privacy settings
+-   Progress indicator
+-   Validation per step
 
 ### Memorial Page:
-- Themed hero section
-- Photo gallery (placeholder)
-- Biography section
-- Tribute submission form
-- Approved tributes list
-- Theme color integration
+
+-   Themed hero section
+-   Photo gallery (placeholder)
+-   Biography section
+-   Tribute submission form
+-   Approved tributes list
+-   Theme color integration
 
 ---
 
 ## 🗄️ Database
 
 ### Tables:
-- `users` - Authentication
-- `memorials` - Pet memorials
-- `tributes` - User tributes
-- `media_assets` - File storage (ready)
-- `waitlist_signups` - Marketing
+
+-   `users` - Authentication
+-   `memorials` - Pet memorials
+-   `tributes` - User tributes
+-   `media_assets` - File storage (ready)
+-   `waitlist_signups` - Marketing
 
 ### Key Relationships:
-- User hasMany Memorials
-- Memorial hasMany Tributes
-- Memorial belongsTo User (owner)
+
+-   User hasMany Memorials
+-   Memorial hasMany Tributes
+-   Memorial belongsTo User (owner)
 
 ---
 
 ## 💻 Tech Stack
 
-- **Framework:** Laravel 12.32.5
-- **PHP:** 8.4.11
-- **Database:** PostgreSQL 17
-- **Frontend:** Livewire 3.6.4
-- **Auth:** Laravel Breeze 2.3.8
-- **Admin:** Filament 4.1.1
-- **CSS:** Tailwind CSS 4.1.14
-- **JS:** Alpine.js (via Livewire)
-- **Testing:** Pest 4.1.1
+-   **Framework:** Laravel 12.32.5
+-   **PHP:** 8.4.11
+-   **Database:** PostgreSQL 17
+-   **Frontend:** Livewire 3.6.4
+-   **Auth:** Laravel Breeze 2.3.8
+-   **Admin:** Filament 4.1.1
+-   **CSS:** Tailwind CSS 4.1.14
+-   **JS:** Alpine.js (via Livewire)
+-   **Testing:** Pest 4.1.1
 
 ---
 
 ## 🚀 Commands
 
 ### Development:
+
 ```bash
 # Start dev server (if needed)
 npm run dev
@@ -192,6 +207,7 @@ php artisan queue:work
 ```
 
 ### Database:
+
 ```bash
 # Run migrations
 php artisan migrate
@@ -221,7 +237,7 @@ php artisan migrate:fresh --seed
 ✅ Dark mode throughout  
 ✅ Responsive design  
 ✅ Protected routes  
-✅ Authorization policies  
+✅ Authorization policies
 
 ---
 
@@ -233,32 +249,36 @@ php artisan migrate:fresh --seed
 ❌ Social sharing buttons  
 ❌ Search functionality  
 ❌ Video uploads  
-❌ Analytics dashboard  
+❌ Analytics dashboard
 
 ---
 
 ## 🎨 Customization
 
 ### Theme Colors:
+
 Available in memorial wizard:
-- Indigo (default)
-- Blue
-- Purple
-- Pink
-- Rose
-- Orange
-- Green
+
+-   Indigo (default)
+-   Blue
+-   Purple
+-   Pink
+-   Rose
+-   Orange
+-   Green
 
 ### Layout Styles:
-- Classic
-- Modern
-- Elegant
+
+-   Classic
+-   Modern
+-   Elegant
 
 ### Privacy Options:
-- Public (anyone can view)
-- Private (owner only)
-- Tributes allowed/disallowed
-- Tribute moderation on/off
+
+-   Public (anyone can view)
+-   Private (owner only)
+-   Tributes allowed/disallowed
+-   Tribute moderation on/off
 
 ---
 
@@ -307,6 +327,7 @@ database/
 ## 🐛 Debugging
 
 ### Check Errors:
+
 ```bash
 # View latest error
 tail -n 50 storage/logs/laravel.log
@@ -318,35 +339,40 @@ tail -n 50 storage/logs/laravel.log
 ### Common Issues:
 
 **Can't access /memorials/create:**
-- Make sure you're logged in
-- Route requires authentication
+
+-   Make sure you're logged in
+-   Route requires authentication
 
 **Memorial not saving:**
-- Check validation errors
-- Verify database connection
-- Check browser console for errors
+
+-   Check validation errors
+-   Verify database connection
+-   Check browser console for errors
 
 **Styles not loading:**
-- Run `npm run build`
-- Clear browser cache
-- Check Vite manifest exists
+
+-   Run `npm run build`
+-   Clear browser cache
+-   Check Vite manifest exists
 
 ---
 
 ## 📞 Support
 
 ### Documentation:
-- Laravel: https://laravel.com/docs
-- Livewire: https://livewire.laravel.com/docs
-- Breeze: https://laravel.com/docs/starter-kits#breeze
-- Filament: https://filamentphp.com/docs
-- Tailwind: https://tailwindcss.com/docs
+
+-   Laravel: https://laravel.com/docs
+-   Livewire: https://livewire.laravel.com/docs
+-   Breeze: https://laravel.com/docs/starter-kits#breeze
+-   Filament: https://filamentphp.com/docs
+-   Tailwind: https://tailwindcss.com/docs
 
 ### Project Files:
-- `PHASE_0-2_COMPLETE.md` - Initial implementation
-- `PHASE_3-4_COMPLETE.md` - Auth & dashboard
-- `IMPLEMENTATION_SUMMARY.md` - Feature breakdown
-- `plan.md` - Original roadmap
+
+-   `PHASE_0-2_COMPLETE.md` - Initial implementation
+-   `PHASE_3-4_COMPLETE.md` - Auth & dashboard
+-   `IMPLEMENTATION_SUMMARY.md` - Feature breakdown
+-   `plan.md` - Original roadmap
 
 ---
 
