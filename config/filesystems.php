@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'private'),
 
     /*
     |--------------------------------------------------------------------------
@@ -30,10 +30,20 @@ return [
 
     'disks' => [
 
-        'local' => [
+        'private' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            'visibility' => 'private',
+            'serve' => false,
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'local' => [
+            'driver' => 'local',
+            'root' => storage_path('app'),
+            'visibility' => 'private',
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],
@@ -59,6 +69,28 @@ return [
             'throw' => false,
             'report' => false,
         ],
+
+        'memorials' => env('MEMORIAL_UPLOADS_DRIVER', env('FILESYSTEM_CLOUD', 's3')) === 'local'
+            ? [
+                'driver' => 'local',
+                'root' => storage_path('app/memorials'),
+                'visibility' => 'private',
+                'throw' => false,
+                'report' => false,
+            ]
+            : [
+                'driver' => env('MEMORIAL_UPLOADS_DRIVER', env('FILESYSTEM_CLOUD', 's3')),
+                'key' => env('AWS_ACCESS_KEY_ID'),
+                'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                'region' => env('AWS_DEFAULT_REGION'),
+                'bucket' => env('AWS_BUCKET'),
+                'url' => env('AWS_URL'),
+                'endpoint' => env('AWS_ENDPOINT'),
+                'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+                'visibility' => 'private',
+                'throw' => false,
+                'report' => false,
+            ],
 
     ],
 

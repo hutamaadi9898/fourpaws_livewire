@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    'hcaptcha' => [
+        'enabled' => (bool) env('HCAPTCHA_ENABLED', false),
+        'site_key' => env('HCAPTCHA_SITE_KEY'),
+        'secret' => env('HCAPTCHA_SECRET'),
+        'verify_endpoint' => env('HCAPTCHA_VERIFY_ENDPOINT', 'https://hcaptcha.com/siteverify'),
+    ],
+
+    'waitlist' => [
+        'endpoint' => env('WAITLIST_ENDPOINT'),
+        'token' => env('WAITLIST_TOKEN'),
+        'list_id' => env('WAITLIST_LIST_ID'),
+    ],
+
 ];
